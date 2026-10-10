@@ -1,0 +1,16 @@
+## Interface: 16001
+## Title: |cff0cd29fEUI|r-PetXP
+## Notes: Hunter pet experience bar in the EllesmereUI style, movable in unlock mode.
+## Author: Langmans
+## Version: 1.0.0
+## Category: |cff0cd29fEllesmere|rUI
+## Dependencies: EllesmereUI
+## OptionalDeps: EllesmereUIDataBars
+## SavedVariables: EUIPetXPDB
+## IconTexture: Interface\Icons\Ability_Hunter_BeastTraining
+
+Core.lua
+Click.lua
+Bar.lua
+Commands.lua
+DataBarBlock.lua
