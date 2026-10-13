@@ -8,6 +8,10 @@ if not EllesmereUI then return end
 --  GetPetExperience() returns 0 / 0 for a pet that has no experience (warlock
 --  demons, no pet out), the same test Blizzard's PetPaperDollFrame uses to hide
 --  its own bar, so everything here only shows for a hunter pet.
+--
+--  A pet at the hunter's level gains no experience until the hunter levels,
+--  so the bar hides then too, the way EllesmereUI's XP block collapses at the
+--  level cap.
 -------------------------------------------------------------------------------
 local _, ns = ...
 
@@ -31,12 +35,15 @@ function ns.FillColor()
     return 0.67, 0.83, 0.45
 end
 
--- cur, max, level of the current pet; nil when the pet has no experience.
+-- cur, max, level of the current pet; nil when the pet has no experience or
+-- cannot gain any (at the hunter's level).
 function ns.PetXP()
     if not (HasPetUI and HasPetUI()) then return nil end
     local cur, nextXP = GetPetExperience()
     if not nextXP or nextXP <= 0 then return nil end
-    return cur or 0, nextXP, UnitLevel("pet") or 0
+    local level = UnitLevel("pet") or 0
+    if level >= (UnitLevel("player") or 0) then return nil end
+    return cur or 0, nextXP, level
 end
 
 -- WoW Forever shows raw XP below 10,000 unabbreviated, like the player XP bar.

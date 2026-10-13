@@ -29,11 +29,6 @@ local function ShowTooltip(self)
         BreakUpLargeNumbers(cur), BreakUpLargeNumbers(maxXP), cur / maxXP * 100), 1, 1, 1, 1, 1, 1)
     GameTooltip:AddDoubleLine(EllesmereUI.L and EllesmereUI.L("Remaining") or "Remaining",
         ns.Abbreviate(maxXP - cur), 1, 1, 1, 1, 1, 1)
-    -- A pet stops gaining experience once it reaches the hunter's level.
-    if level >= (UnitLevel("player") or 0) then
-        GameTooltip:AddLine(" ")
-        GameTooltip:AddLine("Your pet is at your level and gains no experience.", 1, 0.82, 0, true)
-    end
     GameTooltip:AddLine(" ")
     GameTooltip:AddLine("Click to open the pet window.", 0.6, 0.6, 0.6)
     GameTooltip:Show()
@@ -196,7 +191,9 @@ events:SetScript("OnEvent", function(self, event)
         self:RegisterEvent("PLAYER_REGEN_ENABLED")
         self:RegisterUnitEvent("UNIT_PET", "player")
         self:RegisterUnitEvent("UNIT_PET_EXPERIENCE", "pet")
-        self:RegisterUnitEvent("UNIT_LEVEL", "pet")
+        -- The player's UNIT_LEVEL too: during PLAYER_LEVEL_UP UnitLevel("player")
+        -- can still return the old level, and the bar returns at the new one.
+        self:RegisterUnitEvent("UNIT_LEVEL", "pet", "player")
     end
     Update()
 end)

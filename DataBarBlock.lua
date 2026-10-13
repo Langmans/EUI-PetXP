@@ -68,7 +68,8 @@ db.BlockFactories[TYPE_KEY] = function(blockCfg, slot, content, barCtx)
     bar:SetStatusBarTexture("Interface\\Buttons\\WHITE8X8")
 
     -- label, cur, max, level; nil when the pet has no experience (no pet out,
-    -- or a warlock demon), which collapses the block out of the bar.
+    -- or a warlock demon) or is at the hunter's level, which collapses the
+    -- block out of the bar.
     local function ComputeState()
         local cur, maxXP, level = ns.PetXP()
         if not cur then return nil end
@@ -85,11 +86,6 @@ db.BlockFactories[TYPE_KEY] = function(blockCfg, slot, content, barCtx)
         db.Tip_AddDouble(LEVEL or "Level", tostring(level), 0.6, 0.6, 0.6, 1, 1, 1)
         db.Tip_AddDouble(XP or "XP", bl(cur) .. " / " .. bl(maxXP), 0.6, 0.6, 0.6, 1, 1, 1)
         db.Tip_AddDouble("Remaining", ns.Abbreviate(maxXP - cur), 0.6, 0.6, 0.6, 1, 1, 1)
-        -- A pet stops gaining experience once it reaches the hunter's level.
-        if level >= (UnitLevel("player") or 0) then
-            db.Tip_AddLine(" ")
-            db.Tip_AddLine("Your pet is at your level and gains no experience.", 1, 0.82, 0)
-        end
         db.Tip_AddLine(" ")
         db.Tip_AddLine("Click to open the pet window.", 0.6, 0.6, 0.6)
         db.Tip_Show()

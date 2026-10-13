@@ -4,10 +4,12 @@ A hunter pet experience bar for EllesmereUI, built like the Action Bars XP bar
 (dark background, 1px border, centred text in the Action Bars font, tooltip on
 hover). Fill colour is the hunter class colour.
 
-- Shows only while the pet has experience (`GetPetExperience()` max above 0),
-  so it stays hidden without a pet or with a warlock demon.
-- Text: `Pet <level> - <pct>%`. The tooltip adds the raw numbers, what is left,
-  and a note when the pet has reached the hunter's level (it then gains no XP).
+- Shows only while the pet can gain experience (`GetPetExperience()` max above
+  0, pet level below the hunter's), so it stays hidden without a pet, with a
+  warlock demon, and while the pet is at the hunter's level, the way
+  EllesmereUI's XP block collapses at the level cap. It returns when the hunter
+  levels.
+- Text: `Pet <level> - <pct>%`. The tooltip adds the raw numbers and what is left.
 - Position, width and height belong to EllesmereUI unlock mode: the element is
   "Pet XP Bar" in the Action Bars group. Its Anchor To and Width Match tools can
   attach it to the pet unit frame.
