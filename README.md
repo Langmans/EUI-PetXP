@@ -9,7 +9,10 @@ hover). Fill colour is the hunter class colour.
   warlock demon, and while the pet is at the hunter's level, the way
   EllesmereUI's XP block collapses at the level cap. It returns when the hunter
   levels.
-- Text: `Pet <level> - <pct>%`. The tooltip adds the raw numbers and what is left.
+- Text: `<pet name>, <loyalty>, <level> - <pct>%`. The loyalty name comes from
+  `GetPetLoyalty()` and is coloured by its level (1-6) on a gradient from the
+  Friendly to the Exalted colour of EllesmereUI's reputation bar. The tooltip
+  adds the raw numbers and what is left.
 - Position, width and height belong to EllesmereUI unlock mode: the element is
   "Pet XP Bar" in the Action Bars group. Its Anchor To and Width Match tools can
   attach it to the pet unit frame.
@@ -22,7 +25,8 @@ hover). Fill colour is the hunter class colour.
 
 With EllesmereUI DataBars loaded, the addon also adds a **Pet XP Bar** block
 type to the DataBars "Add Block" picker, next to XP / Reputation Bar. It looks
-like that block (label `Pet <pct>% to level <n>` over a thin bar in the hunter
+like that block (label `<pet name>, <loyalty>, <level> - <pct>%`, coloured the
+same way as the bar text, over a thin bar in the hunter
 colour, tooltip with the numbers) and collapses out of the bar when there is no
 pet XP to show.
 
@@ -35,7 +39,8 @@ yet (no type-specific rows in the DataBars options page).
 
 ## Files
 
-- `Core.lua`: settings (`ns.Get`, `ns.Cfg`) and the pet's experience (`ns.PetXP`).
+- `Core.lua`: settings (`ns.Get`, `ns.Cfg`), the pet's experience (`ns.PetXP`)
+  and the shared title with the loyalty colour (`ns.PetTitle`).
 - `Click.lua`: the secure left-click overlay that opens the pet page of the
   character window; shared by the bar and the block.
 - `Bar.lua`: the standalone bar and its unlock-mode element.

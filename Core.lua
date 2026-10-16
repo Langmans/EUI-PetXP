@@ -46,6 +46,47 @@ function ns.PetXP()
     return cur or 0, nextXP, level
 end
 
+-- Loyalty colours run from Friendly to Exalted, the stops taken from the
+-- reputation colours of EllesmereUI's Action Bars data bars.
+local LOYALTY_STOPS = {
+    { 0.30, 0.70, 0.25 }, -- Friendly
+    { 0.25, 0.65, 0.50 }, -- Honored
+    { 0.25, 0.50, 0.75 }, -- Revered
+    { 0.35, 0.30, 0.80 }, -- Exalted
+}
+local MAX_LOYALTY = 6
+
+-- r, g, b for loyalty level 1..6, spread evenly over the stops.
+function ns.LoyaltyColor(level)
+    local t = (math.min(math.max(level, 1), MAX_LOYALTY) - 1) / (MAX_LOYALTY - 1) * (#LOYALTY_STOPS - 1)
+    local i = math.min(math.floor(t) + 1, #LOYALTY_STOPS - 1)
+    local f = t - (i - 1)
+    local a, b = LOYALTY_STOPS[i], LOYALTY_STOPS[i + 1]
+    return a[1] + (b[1] - a[1]) * f, a[2] + (b[2] - a[2]) * f, a[3] + (b[3] - a[3]) * f
+end
+
+-- GetPetLoyalty() returns "Loyalty Level 3 (Faithful)": the number gives the
+-- colour, the part in brackets is the localized name. Without brackets the whole
+-- string is shown, without a number it stays uncoloured.
+local function LoyaltyText()
+    local raw = GetPetLoyalty and GetPetLoyalty()
+    if not raw or raw == "" then return nil end
+    local name = raw:match("%((.-)%)") or raw
+    local level = tonumber(raw:match("%d"))
+    if not level then return name end
+    local r, g, b = ns.LoyaltyColor(level)
+    return string.format("|cff%02x%02x%02x%s|r", r * 255, g * 255, b * 255, name)
+end
+
+-- "<pet name>, <loyalty>, <level>", the shared head of the bar text and the
+-- DataBars label.
+function ns.PetTitle(level)
+    local parts = { UnitName("pet") or PET or "Pet" }
+    parts[#parts + 1] = LoyaltyText()
+    parts[#parts + 1] = tostring(level)
+    return table.concat(parts, ", ")
+end
+
 -- WoW Forever shows raw XP below 10,000 unabbreviated, like the player XP bar.
 ns.Abbreviate = (EllesmereUI.IS_FOREVER and EllesmereUI.ForeverAbbreviateLargeNumbers)
     or AbbreviateLargeNumbers

@@ -50,7 +50,7 @@ local function Update()
     if show then
         bar:SetMinMaxValues(0, maxXP)
         bar:SetValue(cur)
-        text:SetFormattedText("%s %d - %.1f%%", PET or "Pet", level, cur / maxXP * 100)
+        text:SetFormattedText("%s - %.1f%%", ns.PetTitle(level), cur / maxXP * 100)
     end
     -- The click overlay makes Show/Hide protected; in lockdown only the fill
     -- and text update, PLAYER_REGEN_ENABLED brings the visibility up to date.
@@ -191,6 +191,7 @@ events:SetScript("OnEvent", function(self, event)
         self:RegisterEvent("PLAYER_REGEN_ENABLED")
         self:RegisterUnitEvent("UNIT_PET", "player")
         self:RegisterUnitEvent("UNIT_PET_EXPERIENCE", "pet")
+        self:RegisterUnitEvent("UNIT_NAME_UPDATE", "pet")
         -- The player's UNIT_LEVEL too: during PLAYER_LEVEL_UP UnitLevel("player")
         -- can still return the old level, and the bar returns at the new one.
         self:RegisterUnitEvent("UNIT_LEVEL", "pet", "player")

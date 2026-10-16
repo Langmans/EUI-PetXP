@@ -55,7 +55,7 @@ db.BlockFactories[TYPE_KEY] = function(blockCfg, slot, content, barCtx)
     -- combat, so the block needs a pass there.
     inst.events = {
         "PLAYER_ENTERING_WORLD", "PET_UI_UPDATE", "PLAYER_LEVEL_UP",
-        "UNIT_PET", "UNIT_PET_EXPERIENCE", "UNIT_LEVEL", "PLAYER_REGEN_ENABLED",
+        "UNIT_PET", "UNIT_PET_EXPERIENCE", "UNIT_LEVEL", "UNIT_NAME_UPDATE", "PLAYER_REGEN_ENABLED",
     }
 
     local hit = CreateFrame("Frame", nil, content)
@@ -73,7 +73,7 @@ db.BlockFactories[TYPE_KEY] = function(blockCfg, slot, content, barCtx)
     local function ComputeState()
         local cur, maxXP, level = ns.PetXP()
         if not cur then return nil end
-        local label = (PET or "Pet") .. " " .. floor(cur / maxXP * 100) .. "% to level " .. (level + 1)
+        local label = ns.PetTitle(level) .. " - " .. floor(cur / maxXP * 100) .. "%"
         return label, cur, maxXP, level
     end
 
