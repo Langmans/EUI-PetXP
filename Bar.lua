@@ -192,6 +192,8 @@ events:SetScript("OnEvent", function(self, event)
         self:RegisterUnitEvent("UNIT_PET", "player")
         self:RegisterUnitEvent("UNIT_PET_EXPERIENCE", "pet")
         self:RegisterUnitEvent("UNIT_NAME_UPDATE", "pet")
+        -- Training points follow the loyalty rank, so this fires on a loyalty change.
+        self:RegisterUnitEvent("UNIT_PET_TRAINING_POINTS", "pet", "player")
         -- The player's UNIT_LEVEL too: during PLAYER_LEVEL_UP UnitLevel("player")
         -- can still return the old level, and the bar returns at the new one.
         self:RegisterUnitEvent("UNIT_LEVEL", "pet", "player")

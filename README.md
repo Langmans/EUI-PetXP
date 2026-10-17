@@ -9,10 +9,18 @@ hover). Fill colour is the hunter class colour.
   warlock demon, and while the pet is at the hunter's level, the way
   EllesmereUI's XP block collapses at the level cap. It returns when the hunter
   levels.
-- Text: `<pet name>, <loyalty>, <level> - <pct>%`. The loyalty name comes from
-  `GetPetLoyalty()` and is coloured by its level (1-6) on a gradient from the
-  Friendly to the Exalted colour of EllesmereUI's reputation bar. The tooltip
-  adds the raw numbers and what is left.
+- Text: `<pet name>, <loyalty>, <level> - <pct>%`. The tooltip adds the raw
+  numbers and what is left.
+- Loyalty: the name comes from `C_PetInfo.GetPetLoyalty()` (WoW Forever returns
+  the rank name, e.g. "Faithful"), falling back to the classic global
+  `GetPetLoyalty()` ("Loyalty Level 3 (Faithful)"). The rank 1-6 is worked out
+  from the training points, which total `pet level * (rank - 1)`, so it needs
+  no localized names; it colours the name on a gradient from the Friendly to
+  the Exalted colour of EllesmereUI's reputation bar. `UNIT_PET_TRAINING_POINTS`
+  updates the text on a rank change.
+- Every value read from the client is checked for type and `issecretvalue`
+  before it is compared or concatenated; a hidden value drops that part of the
+  text (or hides the bar, for the XP numbers) instead of raising an error.
 - Position, width and height belong to EllesmereUI unlock mode: the element is
   "Pet XP Bar" in the Action Bars group. Its Anchor To and Width Match tools can
   attach it to the pet unit frame.

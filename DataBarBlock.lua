@@ -55,7 +55,8 @@ db.BlockFactories[TYPE_KEY] = function(blockCfg, slot, content, barCtx)
     -- combat, so the block needs a pass there.
     inst.events = {
         "PLAYER_ENTERING_WORLD", "PET_UI_UPDATE", "PLAYER_LEVEL_UP",
-        "UNIT_PET", "UNIT_PET_EXPERIENCE", "UNIT_LEVEL", "UNIT_NAME_UPDATE", "PLAYER_REGEN_ENABLED",
+        "UNIT_PET", "UNIT_PET_EXPERIENCE", "UNIT_LEVEL", "UNIT_NAME_UPDATE",
+        "UNIT_PET_TRAINING_POINTS", "PLAYER_REGEN_ENABLED",
     }
 
     local hit = CreateFrame("Frame", nil, content)
