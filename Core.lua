@@ -85,12 +85,13 @@ local function Call(fn, kind)
 end
 
 -- Loyalty rank 1..6 from the training points, which total
--- pet level * (rank - 1); this needs no localized names.
+-- pet level * (rank - 1); this needs no localized names. A total that does
+-- not divide evenly leaves the rank unknown rather than guessed.
 local function RankFromTrainingPoints()
     local total = Call(C_PetInfo and C_PetInfo.GetPetTrainingPoints or GetPetTrainingPoints, "number")
     local level = Plain(UnitLevel("pet"), "number")
-    if not total or not level or level <= 0 then return nil end
-    local rank = math.floor(total / level + 1.5)
+    if not total or not level or level <= 0 or total % level ~= 0 then return nil end
+    local rank = total / level + 1
     if rank < 1 or rank > MAX_LOYALTY then return nil end
     return rank
 end
