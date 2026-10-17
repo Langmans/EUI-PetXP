@@ -1,6 +1,6 @@
 # EUI-PetXP
 
-[![Release](https://img.shields.io/github/v/release/Langmans/EUI-PetXP?include_prereleases&sort=semver)](https://github.com/Langmans/EUI-PetXP/releases)
+[![Release](https://img.shields.io/github/v/release/Langmans/EUI-PetXP?include_prereleases)](https://github.com/Langmans/EUI-PetXP/releases)
 ![WoW: Forever](https://img.shields.io/badge/WoW-Forever%20%2816001%29-c79c6e)
 ![EllesmereUI](https://img.shields.io/badge/needs-EllesmereUI-blue)
 
