@@ -1,5 +1,9 @@
 # EUI-PetXP
 
+[![Release](https://img.shields.io/github/v/release/Langmans/EUI-PetXP?include_prereleases&sort=semver)](https://github.com/Langmans/EUI-PetXP/releases)
+![WoW: Forever](https://img.shields.io/badge/WoW-Forever%20%2816001%29-c79c6e)
+![EllesmereUI](https://img.shields.io/badge/needs-EllesmereUI-blue)
+
 A hunter pet experience bar for EllesmereUI, built like the Action Bars XP bar
 (dark background, 1px border, centred text in the Action Bars font, tooltip on
 hover). Fill colour is the hunter class colour.
