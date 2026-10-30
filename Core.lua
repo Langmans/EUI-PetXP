@@ -97,9 +97,10 @@ local function RankFromTrainingPoints()
 end
 
 -- name, rank of the pet's loyalty; either may be nil. WoW Forever's
--- C_PetInfo.GetPetLoyalty() returns the rank name ("Faithful"), the classic
--- global GetPetLoyalty() "Loyalty Level 3 (Faithful)", and a bare number is
--- handled too.
+-- C_PetInfo.GetPetLoyalty() returns the rank name ("Faithful"); the classic
+-- clients' global GetPetLoyalty() the whole text of their PetLoyalty table,
+-- "(Loyalty Level 5) Faithful", the name after the brackets. A name inside
+-- them, "Loyalty Level 5 (Faithful)", and a bare number are handled too.
 local function Loyalty()
     local raw = Call(C_PetInfo and C_PetInfo.GetPetLoyalty, "string")
         or Call(GetPetLoyalty, "string")
@@ -109,8 +110,8 @@ local function Loyalty()
         rank = raw
         name = LOYALTY_NAMES[raw]
     elseif raw and raw ~= "" then
-        name = raw:match("%((.-)%)") or raw
-        rank = tonumber(raw:match("%d"))
+        rank = tonumber(raw:match("%d+"))
+        name = raw:match("^%(.-%)%s*(.+)$") or raw:match("%((.-)%)") or (not rank and raw or nil)
     end
     return name, RankFromTrainingPoints() or rank
 end
